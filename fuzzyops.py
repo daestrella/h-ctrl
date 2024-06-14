@@ -29,10 +29,14 @@ class Fuzzy:
     @staticmethod
     def defuzzify(mf, startpos, endpos):
         ''' Defuzzifying fuzzy set using the centroid defuzzification '''
-        xvals = np.arange(startpos, endpos+1, 0.01)
-        yvals = np.vectorize(mf, otypes=[float])(xvals)
+        try:
+            xvals = np.arange(startpos, endpos+1, 0.01)
+            yvals = np.vectorize(mf, otypes=[float])(xvals)
 
-        return np.sum(xvals * yvals)/np.sum(yvals)
+            with np.errstate(divide='ignore', invalid='ignore'):
+                return np.nan_to_num(np.sum(xvals * yvals)/np.sum(yvals))
+        except (ZeroDivisionError, ValueError):
+            return 0
 
 class Rule:
     def __init__(self, antecedent, consequent):
