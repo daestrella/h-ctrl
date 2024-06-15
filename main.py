@@ -20,7 +20,7 @@ def main(stdscr):
     dt = args.time
     sensor = Sensor()
     controller = Controller()
-    graph = Graph(title=f'Temperature', winsize=(12, 6),
+    graph = Graph(title=f'Temperature of the system with respect to time', winsize=(12, 6),
                   xlabel='time', ylabel='temperature')
 
     while True:
